@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CategoriesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
         Admin::factory(1)->create();
+        $this->call(CategoriesTableSeeder::class);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

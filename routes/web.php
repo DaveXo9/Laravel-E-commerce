@@ -23,3 +23,5 @@ Route::get('/admin', [LoginController::class, 'index'])->middleware('auth:admin'
 Route::get('/admin/login', [LoginController::class, 'login'])->middleware('guest:admin')->name('admin.login');
 Route::post('/admin/login', [LoginController::class, 'authenticate'])->middleware('guest:admin')-> name('admin.login.post');
 Route::get('/admin/logout', [LoginController::class, 'logout'])->middleware('auth:admin')->name('admin.logout');
+
+Route::resource('admin/categories', CategoryController::class)->middleware('auth:admin');
