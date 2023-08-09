@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminLoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -33,19 +34,13 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function authenticate(Request $request)
+    public function authenticate(AdminLoginRequest $loginRequest)
     {
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:6'
-        ]);
-        if (Auth::guard('admin')->attempt([
-            'email' => $request->email,
-            'password' => $request->password
-        ], $request->get('remember'))) {
-            return redirect()->intended(route('admin.dashboard'));
+        $requestField = $loginRequest->validated();
+        if (Auth::guard('admin')->attempt($requestField)){
+            return redirect()->route('admin.dashboard');
         }
-        return back()->withInput($request->only('email', 'remember'));
+        return back()->withInput($requestField['email']);
         
     }
 
