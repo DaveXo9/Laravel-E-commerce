@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
 
 
@@ -24,4 +25,4 @@ Route::get('/admin/login', [LoginController::class, 'login'])->middleware('guest
 Route::post('/admin/login', [LoginController::class, 'authenticate'])->middleware('guest:admin')-> name('admin.login.post');
 Route::get('/admin/logout', [LoginController::class, 'logout'])->middleware('auth:admin')->name('admin.logout');
 
-Route::resource('admin/categories', CategoryController::class)->middleware('auth:admin');
+Route::resource('/admin/categories', CategoryController::class, ['as' => 'admin'])->middleware('auth:admin');
