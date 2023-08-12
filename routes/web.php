@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\BrandController;
+
 
 
 /*
@@ -32,3 +34,6 @@ Route::get('/admin/categories/{category}/edit', [CategoryController::class, 'edi
 Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->middleware('auth:admin')->name('admin.categories.update');
 Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->middleware('auth:admin')->name('admin.categories.destroy');
 Route::get('/admin/categories/{category}', [CategoryController::class, 'show'])->middleware('auth:admin')->name('admin.categories.show');
+
+
+Route::resource('/admin/brands', BrandController::class, ['as' => 'admin'])->middleware('auth:admin');
