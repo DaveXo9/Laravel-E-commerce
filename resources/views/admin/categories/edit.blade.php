@@ -1,18 +1,18 @@
 @extends('admin.app')
-@section('title') {{ $pageTitle }} @endsection
+@section('title') Categories @endsection
 @section('content')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-tags"></i> {{ $pageTitle }}</h1>
+            <h1><i class="fa fa-tags"></i> Categories </h1>
         </div>
     </div>
-    @include('admin.partials.flash')
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="tile">
-                <h3 class="tile-title">{{ $subTitle }}</h3>
-                <form action="{{ route('admin.categories.update') }}" method="POST" role="form" enctype="multipart/form-data">
+                <h3 class="tile-title">Edit Categories</h3>
+                <form action="/admin/categories/{{$targetCategory->id}}" method="POST" role="form">
                     @csrf
+                    @method('PUT')
                     <div class="tile-body">
                         <div class="form-group">
                             <label class="control-label" for="name">Name <span class="m-l-5 text-danger"> *</span></label>
@@ -30,9 +30,9 @@
                                 <option value="0">Select a parent category</option>
                                 @foreach($categories as $key => $category)
                                     @if ($targetCategory->parent_id == $key)
-                                        <option value="{{ $key }}" selected> {{ $category }} </option>
+                                        <option value="{{ $category->id }}" selected> {{ $category->name }} </option>
                                     @else
-                                        <option value="{{ $key }}"> {{ $category }} </option>
+                                        <option value="{{ $category->id }}"> {{ $category->name }} </option>
                                     @endif
                                 @endforeach
                             </select>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" id="featured" name="featured"
+                                    <input class="form-check-input" type="checkbox" id="featured" name="featured" value="1"
                                     {{ $targetCategory->featured == 1 ? 'checked' : '' }}
                                     />Featured Category
                                 </label>
@@ -50,7 +50,7 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" id="menu" name="menu"
+                                    <input class="form-check-input" type="checkbox" id="menu" name="menu" value="1"
                                     {{ $targetCategory->menu == 1 ? 'checked' : '' }}
                                     />Show in Menu
                                 </label>
@@ -83,6 +83,3 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-
-@endpush

@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedInteger('quantity');
             $table->boolean('status')->default(1);
             $table->boolean('featured')->default(0);
-            $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
         });
     }
 

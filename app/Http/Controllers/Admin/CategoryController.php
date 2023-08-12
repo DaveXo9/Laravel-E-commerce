@@ -13,7 +13,7 @@ use App\Services\ImageUploadService;
 class CategoryController extends Controller
 {
 
-    public function __construct(ImageUploadService $imageUploadService)
+    public function __construct(private ImageUploadService $imageUploadService)
     {
         
     }
@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::where('id', '!=', 1)->get();
-        $this->setPageTitle('Categories', 'List of all categories');
+        // $this->setPageTitle('Categories', 'List of all categories');
 
         return view('admin.categories.index', compact('categories'));
         
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::where('id', '!=', 1)->get();
-        $this->setPageTitle('Categories', 'Create Category');
+        // $this->setPageTitle('Categories', 'Create Category');
 
         return view('admin.categories.create', compact('categories')); 
 
@@ -53,6 +53,8 @@ class CategoryController extends Controller
      */
     public function store(AdminCategoryRequest $categoryRequest)
     {
+
+
         $formFields = $categoryRequest->only(['name', 'description', 'parent_id']);
 
         $formFields['featured'] = $categoryRequest->has('featured') ? 1 : 0;
@@ -65,22 +67,11 @@ class CategoryController extends Controller
         }
         Category::create($formFields);
 
-        return redirect('admin/categories/index')->with('success', 'Category has been added successfully!');
+        return redirect('admin/categories')->with('success', 'Category has been added successfully!');
         
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        return view('admin.categories.show', compact('category'));
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -90,7 +81,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return  view('admin.categories.edit', compact('category'));
+        // Retrive all categories, every single one of them
+        $categories = Category::all();
+        $targetCategory = $category;
+        return  view('admin.categories.edit', compact('categories', 'targetCategory'));
         //
     }
 
@@ -101,7 +95,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Category $category)
+    public function update(AdminCategoryRequest $categoryRequest, Category $category)
     {
         $formFields = $categoryRequest->only(['name', 'description', 'parent_id']);
 
@@ -113,9 +107,9 @@ class CategoryController extends Controller
         $formFields['image'] = $this->imageUploadService->uploadOne($categoryRequest->file('image'),'categories');
         
         }
-        Category::update($formFields);
+        $category->update($formFields);
 
-        return redirect('admin/categories/index')->with('success', 'Category has been added successfully!');
+        return redirect('admin/categories')->with('success', 'Category has been added successfully!');
         
 
         //
@@ -131,7 +125,20 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return back()->with('success', 'Category has been deleted successfully!');
+        return redirect('/admin/categories')->with('success', 'Category has been deleted successfully!');
         //
     }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Category $category)
+    {
+        return view('admin.categories.show', compact('category'));
+        //
+    }
+
 }

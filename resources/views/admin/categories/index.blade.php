@@ -1,14 +1,13 @@
 @extends('admin.app')
-@section('title') {{ $pageTitle }} @endsection
+@section('title') Categories @endsection
 @section('content')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-tags"></i> {{ $pageTitle }}</h1>
-            <p>{{ $subTitle }}</p>
+            <h1><i class="fa fa-tags"></i>Categories</h1>
+            <p>List of all Categories</p>
         </div>
         <a href="{{ route('admin.categories.create') }}" class="btn btn-primary pull-right">Add Category</a>
     </div>
-    @include('admin.partials.flash')
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
@@ -53,8 +52,12 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="Second group">
-                                                <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                                <a href="{{ route('admin.categories.delete', $category->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                                <a href="/admin/categories/{{$category->id}}/edit" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                                <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

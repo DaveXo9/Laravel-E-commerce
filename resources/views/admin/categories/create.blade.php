@@ -1,17 +1,16 @@
 @extends('admin.app')
-@section('title') {{ $pageTitle }} @endsection
+@section('title') Categories @endsection
 @section('content')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-tags"></i> {{ $pageTitle }}</h1>
+            <h1><i class="fa fa-tags"></i>Categories</h1>
         </div>
     </div>
-    @include('admin.partials.flash')
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="tile">
-                <h3 class="tile-title">{{ $subTitle }}</h3>
-                <form action="{{ route('admin.categories.store') }}" method="POST" role="form" enctype="multipart/form-data">
+                <h3 class="tile-title">Create Category</h3>
+                <form action="/admin/categories" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
                     <div class="tile-body">
                         <div class="form-group">
@@ -28,7 +27,7 @@
                             <select id=parent class="form-control custom-select mt-15 @error('parent_id') is-invalid @enderror" name="parent_id">
                                 <option value="0">Select a parent category</option>
                                 @foreach($categories as $key => $category)
-                                    <option value="{{ $key }}"> {{ $category }} </option>
+                                    <option value="{{ $category->id }}"> {{ $category->name }} </option>
                                 @endforeach
                             </select>
                             @error('parent_id') {{ $message }} @enderror
@@ -36,14 +35,14 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" id="featured" name="featured"/>Featured Category
+                                    <input class="form-check-input" type="checkbox" id="featured" value="1" name="featured"/>Featured Category
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" id="menu" name="menu"/>Show in Menu
+                                    <input class="form-check-input" type="checkbox" id="menu" value="1" name="menu"/>Show in Menu
                                 </label>
                             </div>
                         </div>
@@ -63,6 +62,3 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-
-@endpush

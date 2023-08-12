@@ -25,4 +25,10 @@ Route::get('/admin/login', [LoginController::class, 'login'])->middleware('guest
 Route::post('/admin/login', [LoginController::class, 'authenticate'])->middleware('guest:admin')-> name('admin.login.post');
 Route::get('/admin/logout', [LoginController::class, 'logout'])->middleware('auth:admin')->name('admin.logout');
 
-Route::resource('/admin/categories', CategoryController::class, ['as' => 'admin'])->middleware('auth:admin');
+Route::get('/admin/categories', [CategoryController::class, 'index'])->middleware('auth:admin')->name('admin.categories.index');
+Route::get('/admin/categories/create', [CategoryController::class, 'create'])->middleware('auth:admin')->name('admin.categories.create');
+Route::post('/admin/categories', [CategoryController::class, 'store'])->middleware('auth:admin')->name('admin.categories.store');
+Route::get('/admin/categories/{category}/edit', [CategoryController::class, 'edit'])->middleware('auth:admin')->name('admin.categories.edit');
+Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->middleware('auth:admin')->name('admin.categories.update');
+Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->middleware('auth:admin')->name('admin.categories.destroy');
+Route::get('/admin/categories/{category}', [CategoryController::class, 'show'])->middleware('auth:admin')->name('admin.categories.show');
