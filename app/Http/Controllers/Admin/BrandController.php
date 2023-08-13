@@ -48,22 +48,11 @@ class BrandController extends Controller
     public function store(AdminBrandRequest $brandRequest)
     {
         $formField = $brandRequest->validated();
-        $formField['image'] = $this->imageUploadService->uploadOne($brandRequest->file('image'), 'brands');
+        $formField['logo'] = $this->imageUploadService->uploadOne($brandRequest->file('logo'), 'brands');
 
         $brand = Brand::create($formField);
 
         return redirect()->route('admin.brands.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -88,7 +77,7 @@ class BrandController extends Controller
     public function update(AdminBrandRequest $brandRequest, Brand $brand)
     {
         $formField = $brandRequest->validated();
-        $formField['image'] = $this->imageUploadService->uploadOne($brandRequest->file('image'), 'brands');
+        $formField['logo'] = $this->imageUploadService->uploadOne($brandRequest->file('logo'), 'brands');
 
         $brand->update($formField);
 
@@ -107,7 +96,7 @@ class BrandController extends Controller
     {
         $brand -> delete();
 
-        return redirect()->route('admin.brands.index');
+        return redirect('/admin/brands');
         //
     }
 }

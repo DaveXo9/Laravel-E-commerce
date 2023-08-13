@@ -25,7 +25,7 @@ class AdminBrandRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'image' => 'mimes:jpg,jpeg,png|max:1000'
+            'logo' => 'mimes:jpg,jpeg,png|max:1000'
             //
         ];
     }
