@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Brand;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use App\Models\ProductImage;
 use App\Models\ProductAttribute;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,12 @@ class Product extends Model
 
     protected  $fillable = ['name', 'slug', 'description', 'price', 'quantity', 'status', 'featured', 'brand_id', 'category_id'];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+    
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
