@@ -18,8 +18,9 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="general">
                     <div class="tile">
-                        <form action="{{ route('admin.products.update') }}" method="POST" role="form">
+                        <form action="/admin/products/{{$product->id}}" method="POST" role="form">
                             @csrf
+                            @method('PUT')
                             <h3 class="tile-title">Product Information</h3>
                             <hr>
                             <div class="tile-body">

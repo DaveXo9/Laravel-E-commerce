@@ -18,7 +18,7 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="general">
                     <div class="tile">
-                        <form action="{{ route('admin.products.store') }}" method="POST" role="form">
+                        <form action="/admin/products" method="POST" role="form">
                             @csrf
                             <h3 class="tile-title">Product Information</h3>
                             <hr>
@@ -73,7 +73,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label" for="categories">Categories</label>
-                                            <select name="categories[]" id="categories" class="form-control" multiple>
+                                            <select name="categories[]" id="categories" class="form-control custom-select mt-15" >
+                                                <option value="0" required="true">Select a category</option>
                                                 @foreach($categories as $category)
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                 @endforeach
@@ -154,6 +155,7 @@
                                                    type="checkbox"
                                                    id="status"
                                                    name="status"
+                                                    value="1"
                                                 />Status
                                         </label>
                                     </div>
@@ -165,6 +167,7 @@
                                                    type="checkbox"
                                                    id="featured"
                                                    name="featured"
+                                                   value="1"
                                                 />Featured
                                         </label>
                                     </div>

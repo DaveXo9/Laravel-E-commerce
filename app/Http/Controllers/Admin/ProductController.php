@@ -45,16 +45,18 @@ class ProductController extends Controller
     public function store(AdminProductsRequest $productRequest)
     {
         $formFields = $productRequest->validated();
-
+    
         $formFields['featured'] = $productRequest->has('featured') ? 1 : 0;
         $formFields['status'] = $productRequest->has('status') ? 1 : 0;
-
-        Product::create($formFields);
-
+    
+    
+        if ($productRequest->has('categories')) {
+            Product::create($formFields)->categories()->sync($productRequest->input('categories'));
+        }
+    
         return redirect('/admin/products');
-        //
     }
-
+    
 
     /**
      * Show the form for editing the specified resource.

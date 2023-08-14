@@ -25,12 +25,12 @@ class AdminProductsRequest extends FormRequest
     {
         return [
             'name'      =>  'required|max:255',
-            'description'   =>  'required'|'string',
             'sku'       =>  'required',
-            'category_id'   =>  'required|not_in:0',
             'brand_id'  =>  'required|not_in:0',
             'price'     =>  'required|regex:/^\d+(\.\d{1,2})?$/',
+            'special_price'     =>  'regex:/^\d+(\.\d{1,2})?$/',
             'quantity'  =>  'required|numeric',
+            'description'   =>  'required',
         ];
     }
 }
