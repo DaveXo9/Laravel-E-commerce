@@ -14,7 +14,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected  $fillable = ['name', 'slug', 'description', 'price', 'special_price', 'quantity', 'status', 'featured', 'brand_id', 'category_id', 'sku'];
+    protected  $fillable = ['name', 'slug', 'description', 'price', 'special_price', 'quantity', 'status', 'featured', 'brand_id','sku'];
 
     public function setNameAttribute($value)
     {
@@ -39,6 +39,6 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_id');
+        return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
     }
 }

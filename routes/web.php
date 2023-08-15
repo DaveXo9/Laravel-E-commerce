@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductImageController;
 
 
 
@@ -40,3 +41,6 @@ Route::get('/admin/categories/{category}', [CategoryController::class, 'show'])-
 Route::resource('/admin/brands', BrandController::class, ['as' => 'admin'])->middleware('auth:admin');
 
 Route::resource('/admin/products', ProductController::class, ['as' => 'admin'])->middleware('auth:admin');
+
+Route::post('/images/upload/{product}', [ProductImageController::class, 'store'])->middleware('auth:admin')->name('admin.products.images.upload');
+Route::delete('/images/{image}', [ProductImageController::class, 'destroy'])->middleware('auth:admin')->name('admin.products.images.destroy');

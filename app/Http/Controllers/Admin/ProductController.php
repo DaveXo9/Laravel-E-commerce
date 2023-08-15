@@ -49,10 +49,12 @@ class ProductController extends Controller
         $formFields['featured'] = $productRequest->has('featured') ? 1 : 0;
         $formFields['status'] = $productRequest->has('status') ? 1 : 0;
     
-    
+        $product = Product::create($formFields);
+
         if ($productRequest->has('categories')) {
-            Product::create($formFields)->categories()->sync($productRequest->input('categories'));
+            $product->categories()->attach($productRequest->input('categories'));
         }
+    
     
         return redirect('/admin/products');
     }
@@ -83,12 +85,17 @@ class ProductController extends Controller
     public function update(AdminProductsRequest $productRequest, Product $product)
     {
         $formFields = $productRequest->validated();
-
+    
         $formFields['featured'] = $productRequest->has('featured') ? 1 : 0;
         $formFields['status'] = $productRequest->has('status') ? 1 : 0;
-
+    
         $product->update($formFields);
 
+        if ($productRequest->has('categories')) {
+            $product->categories()->attach($productRequest->input('categories'));
+        }
+    
+    
         return redirect('/admin/products');
         //
     }

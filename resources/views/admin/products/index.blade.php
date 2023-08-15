@@ -28,16 +28,16 @@
                         <tbody>
                             @foreach($products as $product)
                                 <tr>
-                                    <td>{{ $product->id }}</td>
-                                    <td>{{ $product->sku }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->brand->name }}</td>
+                                    <td class="text-center">{{ $product->id }}</td>
+                                    <td class="text-center">{{ $product->sku }}</td>
+                                    <td class="text-center">{{ $product->name }}</td>
+                                    <td class="text-center">{{ $product->brand->name }}</td>
                                     <td>
                                         @foreach($product->categories as $category)
                                             <span class="badge badge-info">{{ $category->name }}</span>
                                         @endforeach
                                     </td>
-                                    <td>{{ config('settings.currency_symbol') }}{{ $product->price }}</td>
+                                    <td class="text-center">{{ config('settings.currency_symbol') }}{{ $product->price }}</td>
                                     <td class="text-center">
                                         @if ($product->status == 1)
                                             <span class="badge badge-success">Active</span>
