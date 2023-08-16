@@ -23,6 +23,12 @@
                 <span class="app-menu__label">Users</span>
                 <i class="treeview-indicator fa fa-angle-right"></i>
             </a>
+
+            <a class="app-menu__item {{ Route::currentRouteName() == 'admin.attributes.index' ? 'active' : '' }}" href="{{ route('admin.attributes.index') }}">
+                <i class="app-menu__icon fa fa-th"></i>
+                <span class="app-menu__label">Attributes</span>
+            </a>
+            
             <ul class="treeview-menu">
                 <li>
                     <a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> Admin Users</a>

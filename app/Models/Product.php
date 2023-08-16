@@ -34,7 +34,7 @@ class Product extends Model
 
     public function attributes()
     {
-        return $this->hasMany(ProductAttribute::class);
+        return $this->belongsToMany(ProductAttribute::class, 'product_attributes_pivot', 'product_id', 'product_attribute_id');
     }
 
     public function categories()
