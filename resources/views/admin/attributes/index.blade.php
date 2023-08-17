@@ -28,7 +28,7 @@
                                     <td class="text-center">
                                         <div class="btn-group" role="group" aria-label="Second group">
                                             <a href="{{ route('admin.attributes.edit', $attribute->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                            <form action="{{ route('admin.attributes.destroy', $attribute->id) }}" method="POST">
+                                            <form action="/admin/attributes/{{$attribute->id}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>

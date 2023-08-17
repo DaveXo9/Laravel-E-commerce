@@ -45,6 +45,8 @@ class ProductAttributeTypeController extends Controller
         AttributeType::create([
             'type' => $request->type,
         ]);
+
+        return redirect()->route('admin.attributes.index');
     }
 
     /**
@@ -55,7 +57,8 @@ class ProductAttributeTypeController extends Controller
      */
     public function edit(AttributeType $attribute)
     {
-        return view('admin.attributes.edit', compact('attribute'));
+        $product_attributes = ProductAttribute::where('attribute_type_id', $attribute->id)->get();
+        return view('admin.attributes.edit', compact('attribute', 'product_attributes'));
     }
 
 
@@ -66,9 +69,9 @@ class ProductAttributeTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AttributeType $attributeType)
+    public function update(Request $request, AttributeType $attribute)
     {
-        $attributeType->update([
+        $attribute->update([
             'type' => $request->type,
         ]);
 
@@ -81,9 +84,9 @@ class ProductAttributeTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AttributeType $attributeType)
+    public function destroy(AttributeType $attribute)
     {
-        $attributeType->delete();
+        $attribute->delete();
 
         return redirect()->route('admin.attributes.index');
     }

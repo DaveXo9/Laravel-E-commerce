@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Product;
+use App\Models\AttributeType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,7 +11,7 @@ class ProductAttribute extends Model
 {
     use HasFactory;
 
-    protected  $fillable = ['product_id','name'];
+    protected  $fillable = ['name', 'price', 'attribute_type_id'];
 
     public function product()
     {

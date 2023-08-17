@@ -10,8 +10,10 @@
         <div class="col-md-3">
             <div class="tile p-0">
                 <ul class="nav flex-column nav-tabs user-tabs">
-                    <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">General</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#values" data-toggle="tab">Attribute Values</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">Attribute Type</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#values" data-toggle="tab">Add a Product Attribute</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#edit_values" data-toggle="tab">Edit a Product Attribute</a></li>
+
                 </ul>
             </div>
         </div>
@@ -57,13 +59,17 @@
                         <hr>
                         <div class="tile-body">
                             <div class="form-group">
-                                <label class="control-label" for="value">Value</label>
+                             <form action="/admin/product_attributes" method="POST" role="form">
+                                @csrf
+                                <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
+                                
+                                <label class="control-label" for="name">Name</label>
                                 <input
                                     class="form-control"
                                     type="text"
-                                    placeholder="Enter attribute value"
-                                    id="value"
-                                    name="value"
+                                    placeholder="Enter product attribute name"
+                                    id="name"
+                                    name="name"
                                 />
                             </div>
                             <div class="form-group">
@@ -71,7 +77,7 @@
                                 <input
                                     class="form-control"
                                     type="number"
-                                    placeholder="Enter attribute value price"
+                                    placeholder="Enter attribute price"
                                     id="price"
                                     name="price"
                                 />
@@ -83,8 +89,55 @@
                                     <button class="btn btn-success" type="submit">
                                         <i class="fa fa-fw fa-lg fa-check-circle"></i>Save
                                     </button>
-                                    <button class="btn btn-success" type="submit" >
-                                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Update
+                                    <button class="btn btn-primary" type="submit" >
+                                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+
+                <div class="tab-pane" id="edit_values">
+                    <div class="tile">
+                        <h3 class="tile-title">Edit Attribute Values</h3>
+                        <hr>
+                        <div class="tile-body">
+                            <div class="form-group">
+                             <form  id="editValuesForm" action="/admin/product_attributes" method="POST" role="form">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
+                                
+                                <label class="control-label" for="name">Name</label>
+                                <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter product attribute name"
+                                    id="name"
+                                    name="name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="price">Price</label>
+                                <input
+                                    class="form-control"
+                                    type="number"
+                                    placeholder="Enter attribute price"
+                                    id="price"
+                                    name="price"
+                                />
+                            </div>
+                        </div>
+                        <div class="tile-footer">
+                            <div class="row d-print-none mt-2">
+                                <div class="col-12 text-right">
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="fa fa-fw fa-lg fa-check-circle"></i>Save
                                     </button>
                                     <button class="btn btn-primary" type="submit" >
                                         <i class="fa fa-fw fa-lg fa-check-circle"></i>Reset
@@ -92,10 +145,13 @@
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                     
 
                     <div id="">
+                        
+                        @foreach($product_attributes as $product_attribute)
                         <div class="tile">
                             <h3 class="tile-title">Option Values</h3>
                             <div class="tile-body">
@@ -104,18 +160,18 @@
                                         <thead>
                                         <tr class="text-center">
                                             <th>#</th>
-                                            <th>Value</th>
+                                            <th>Name</th>
                                             <th>Price</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr v-for="value in values">
-                                            <td style="width: 25%" class="text-center">Place holder</td>
-                                            <td style="width: 25%" class="text-center">Place holder</td>
-                                            <td style="width: 25%" class="text-center">Place holder</td>
+                                            <td style="width: 25%" class="text-center">{{$product_attribute->id}}</td>
+                                            <td style="width: 25%" class="text-center">{{$product_attribute->name}}</td>
+                                            <td style="width: 25%" class="text-center">{{$product_attribute->price}}</td>
                                             <td style="width: 25%" class="text-center">
-                                                <button class="btn btn-sm btn-primary">
+                                                <button class="btn btn-sm btn-primary" onclick="editAttributeValue({{$product_attribute->id}}, '{{$product_attribute->name}}', {{$product_attribute->price}})">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-danger">
@@ -128,17 +184,38 @@
                                 </div>
                             </div>
                         </div>
+
+                        @endforeach
                     </div>
 
 
-
-
-
                 </div>
+
+
+
             </div>
         </div>      
     </div>
 @endsection
+
+
 @push('scripts')
-    <script src="{{ asset('backend/js/app.js') }}"></script>
+<script src="{{ asset('backend/js/app.js') }}"></script>
+<script>
+function editAttributeValue(id, name, price) {
+    // Update the form action
+    const form = document.querySelector('#editValuesForm');
+    form.action = `/admin/product_attributes/${id}`;
+
+    // Pre-fill the name and price fields
+    const nameInput = form.querySelector('input[name="name"]');
+    const priceInput = form.querySelector('input[name="price"]');
+    nameInput.value = name;
+    priceInput.value = price;
+
+    // Switch to the "Edit Attribute Values" tab
+    const editValuesTab = document.querySelector('#edit_values_tab');
+    editValuesTab.click();
+}
+</script>
 @endpush

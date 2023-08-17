@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductAttributeTypeController;
+use App\Http\Controllers\Admin\ProductAttributeController;
 
 
 
@@ -48,3 +49,7 @@ Route::delete('/images/{image}', [ProductImageController::class, 'destroy'])->mi
 
 
 Route::resource('/admin/attributes', ProductAttributeTypeController::class, ['as' => 'admin'])->middleware('auth:admin');
+
+Route::post('/admin/product_attributes', [ProductAttributeController::class, 'store'])->middleware('auth:admin')->name('admin.attributes.values.store');
+
+Route::put('/admin/product_attributes/{product_attribute}', [ProductAttributeController::class, 'update'])->middleware('auth:admin')->name('admin.attributes.values.update');

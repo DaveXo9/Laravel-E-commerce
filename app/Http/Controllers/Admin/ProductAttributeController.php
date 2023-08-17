@@ -39,18 +39,13 @@ class ProductAttributeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        ProductAttribute::create([
+            'attribute_type_id' => $request->attribute_id,
+            'name' => $request->name,
+            'price' => $request->price,
+        ]);
+        
+        return redirect()->route('admin.attributes.index');
     }
 
     /**
@@ -71,9 +66,16 @@ class ProductAttributeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ProductAttribute $product_attribute)
     {
-        //
+        $product_attribute->update([
+            'attribute_type_id' => $request->attribute_id,
+            'name' => $request->name,
+            'price' => $request->price,
+        ]);
+
+        return redirect()->route('admin.attributes.index');
+
     }
 
     /**
