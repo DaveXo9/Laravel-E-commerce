@@ -241,7 +241,91 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="attributes">
-                    <product-attributes :productid="{{ $product->id }}"></product-attributes>
+                    <div>
+                        <div class="tile">
+                            <h3 class="tile-title">Attributes</h3>
+                            <hr>
+                            <div class="tile-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="attributeSelect">Select an Attribute <span class="m-l-5 text-danger"> *</span></label>
+                                            <select id="attributeSelect" class="form-control custom-select mt-15">
+                                                <option value="">Select an Attribute</option>
+                                                @foreach ($attributes as $attribute)
+                                                    <option value="{{ $attribute->id }}">{{ $attribute->type }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tile" v-if="attributeSelected">
+                            <h3 class="tile-title">Add Attributes To Product</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="productAttributeSelect">Select an value <span class="m-l-5 text-danger"> *</span></label>
+                                        <select id=productAttributeSelect class="form-control custom-select mt-15">
+                                            <option value="">Select a Product Attribute</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="quantity">Quantity</label>
+                                        <input class="form-control" type="number" id="quantity" name ="quantity"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="price">Price</label>
+                                        <input class="form-control" type="text" id="price" name="price"/>
+                                        <small class="text-danger">This price will be added to the main price of product on frontend.</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-sm btn-primary" type="submit">
+                                        <i class="fa fa-plus"></i> Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tile">
+                            <h3 class="tile-title">Product Attributes</h3>
+                            <div class="tile-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                        <tr class="text-center">
+                                            <th>Value</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($productAttributes as $productAttribute )
+                                        <tr>
+                                            <td style="width: 25%" class="text-center">{{$productAttribute->name}}</td>
+                                            <td style="width: 25%" class="text-center">{{ $productAttribute->id}}</td>
+                                            <td style="width: 25%" class="text-center">{{ $productAttribute->price}}</td>
+                                            <td style="width: 25%" class="text-center">
+                                                <button class="btn btn-sm btn-danger" type="submit">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -295,4 +379,31 @@
             }
         });
     </script>
+
+
+<script>
+    const attributeSelect = document.getElementById('attributeSelect');
+    const productAttributeSelect = document.getElementById('productAttributeSelect');
+
+    attributeSelect.addEventListener('change', function () {
+        const selectedAttributeId = attributeSelect.value;
+
+        // Clear existing options
+        productAttributeSelect.innerHTML = '<option value="">Select a Product Attribute</option>';
+
+        // Populate options based on the selected attribute
+        if (selectedAttributeId) {
+            const productAttributes = {!! json_encode($productAttributes) !!};
+            
+            for (const productAttribute of productAttributes) {
+                if (productAttribute.attribute_id === Number(selectedAttributeId)) {
+                    const option = document.createElement('option');
+                    option.value = productAttribute.id;
+                    option.textContent = productAttribute.name;
+                    productAttributeSelect.appendChild(option);
+                }
+            }
+        }
+    });
+</script>
 @endpush

@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\AttributeType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminProductsRequest;
 
@@ -70,8 +71,10 @@ class ProductController extends Controller
     {
         $brands = Brand::all();
         $categories = Category::all();
+        $attributes = AttributeType::all();
+        $productAttributes = $product->attributes()->get();
 
-        return view('admin.products.edit', compact('product', 'brands', 'categories'));
+        return view('admin.products.edit', compact('product', 'brands', 'categories', 'attributes', 'productAttributes'));
         
     }
 
