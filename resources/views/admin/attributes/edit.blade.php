@@ -166,7 +166,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="value in values">
+                                        <tr >
                                             <td style="width: 25%" class="text-center">{{$product_attribute->id}}</td>
                                             <td style="width: 25%" class="text-center">{{$product_attribute->name}}</td>
                                             <td style="width: 25%" class="text-center">{{$product_attribute->price}}</td>
@@ -174,9 +174,11 @@
                                                 <button class="btn btn-sm btn-primary" onclick="editAttributeValue({{$product_attribute->id}}, '{{$product_attribute->name}}', {{$product_attribute->price}})">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
+                                                <form action="{{ route('admin.attributes.values.destroy', $product_attribute->id) }}" style="display: inline-block;" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                         </tbody>

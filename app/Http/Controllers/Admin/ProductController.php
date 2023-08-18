@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 use App\Models\AttributeType;
 use App\Http\Controllers\Controller;
@@ -72,9 +73,10 @@ class ProductController extends Controller
         $brands = Brand::all();
         $categories = Category::all();
         $attributes = AttributeType::all();
+        $allProductAttributes = ProductAttribute::all();
         $productAttributes = $product->attributes()->get();
-
-        return view('admin.products.edit', compact('product', 'brands', 'categories', 'attributes', 'productAttributes'));
+    
+        return view('admin.products.edit', compact('product', 'brands', 'categories', 'attributes', 'allProductAttributes', 'productAttributes'));
         
     }
 

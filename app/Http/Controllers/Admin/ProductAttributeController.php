@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductAttribute;
+use App\Http\Controllers\Controller;
 
 class ProductAttributeController extends Controller
 {
@@ -78,14 +79,31 @@ class ProductAttributeController extends Controller
 
     }
 
+    public function addAttributeToProduct(Request $request, Product $product)
+    {
+        $product->attributes()->attach($request->attribute_id);
+
+        return redirect()->route('admin.products.edit', $product->id);
+    }
+
+    public function removeAttributeFromProduct(Request $request, Product $product)
+    {
+        $product->attributes()->detach($request->attribute_id);
+
+        return redirect()->route('admin.products.edit', $product->id);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProductAttribute $product_attribute)
     {
-        //
+        $product_attribute->delete();
+
+        return redirect()->route('admin.attributes.index');
     }
+
 }

@@ -53,3 +53,8 @@ Route::resource('/admin/attributes', ProductAttributeTypeController::class, ['as
 Route::post('/admin/product_attributes', [ProductAttributeController::class, 'store'])->middleware('auth:admin')->name('admin.attributes.values.store');
 
 Route::put('/admin/product_attributes/{product_attribute}', [ProductAttributeController::class, 'update'])->middleware('auth:admin')->name('admin.attributes.values.update');
+
+Route::delete('/admin/product_attributes/{product_attribute}', [ProductAttributeController::class, 'destroy'])->middleware('auth:admin')->name('admin.attributes.values.destroy');
+
+Route::put('/admin/product_attributes/add/{product}', [ProductAttributeController::class, 'addAttributeToProduct'])->middleware('auth:admin')->name('admin.attributes.values.add');
+Route::put('/admin/product_attributes/remove/{product}', [ProductAttributeController::class, 'removeAttributeFromProduct'])->middleware('auth:admin')->name('admin.attributes.values.remove');

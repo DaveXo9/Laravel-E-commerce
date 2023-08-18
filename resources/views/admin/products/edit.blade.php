@@ -250,7 +250,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="attributeSelect">Select an Attribute <span class="m-l-5 text-danger"> *</span></label>
-                                            <select id="attributeSelect" class="form-control custom-select mt-15">
+                                            <select id="attributeSelect" name="attributeSelect" class="form-control custom-select mt-15">
                                                 <option value="">Select an Attribute</option>
                                                 @foreach ($attributes as $attribute)
                                                     <option value="{{ $attribute->id }}">{{ $attribute->type }}</option>
@@ -261,18 +261,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tile" v-if="attributeSelected">
+                        <div class="tile">
                             <h3 class="tile-title">Add Attributes To Product</h3>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="productAttributeSelect">Select an value <span class="m-l-5 text-danger"> *</span></label>
-                                        <select id=productAttributeSelect class="form-control custom-select mt-15">
-                                            <option value="">Select a Product Attribute</option>
-                                        </select>
+                                    <form action="/admin/product_attributes/add/{{$product->id}}" method="POST" role="form">
+                                        @csrf
+                                        @method('PUT')
+
+                                        
+                                        <div class="form-group">
+                                            <label for="productAttributeSelect">Select an value <span class="m-l-5 text-danger"> *</span></label>
+                                            <select id=productAttributeSelect class="form-control custom-select mt-15">
+                                                <option value="">Select a Product Attribute</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <input type="hidden" name="attribute_id" id="attribute_id" value="">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -292,6 +298,7 @@
                                         <i class="fa fa-plus"></i> Add
                                     </button>
                                 </div>
+                            </form>
                             </div>
                         </div>
                         <div class="tile">
@@ -314,9 +321,12 @@
                                             <td style="width: 25%" class="text-center">{{ $productAttribute->id}}</td>
                                             <td style="width: 25%" class="text-center">{{ $productAttribute->price}}</td>
                                             <td style="width: 25%" class="text-center">
-                                                <button class="btn btn-sm btn-danger" type="submit">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
+                                                <form action="{{ route('admin.attributes.values.remove', $product->id) }}" style="display: inline-block;" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="hidden" name="attribute_id" value="{{ $productAttribute->id }}">
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -383,6 +393,7 @@
 
 <script>
     const attributeSelect = document.getElementById('attributeSelect');
+    console.log('here')
     const productAttributeSelect = document.getElementById('productAttributeSelect');
 
     attributeSelect.addEventListener('change', function () {
@@ -393,10 +404,12 @@
 
         // Populate options based on the selected attribute
         if (selectedAttributeId) {
-            const productAttributes = {!! json_encode($productAttributes) !!};
+            const productAttributes = {!! json_encode($allProductAttributes) !!};
             
             for (const productAttribute of productAttributes) {
-                if (productAttribute.attribute_id === Number(selectedAttributeId)) {
+                if (productAttribute.attribute_type_id === Number(selectedAttributeId)) {
+                    const hiddeId = document.getElementById('attribute_id');
+                    hiddeId.value = productAttribute.id;
                     const option = document.createElement('option');
                     option.value = productAttribute.id;
                     option.textContent = productAttribute.name;
