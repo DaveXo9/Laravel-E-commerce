@@ -18,12 +18,14 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('slug');
+            $table->string('sku');
             $table->text('description');
+            $table->decimal('weight', 8, 2)->nullable();
             $table->decimal('price', 8, 2);
+            $table->decimal('special_price', 8, 2);
             $table->unsignedInteger('quantity');
             $table->boolean('status')->default(1);
             $table->boolean('featured')->default(0);
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
         });
     }

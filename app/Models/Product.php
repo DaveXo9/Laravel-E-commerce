@@ -14,7 +14,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected  $fillable = ['name', 'slug', 'description', 'price', 'quantity', 'status', 'featured', 'brand_id', 'category_id'];
+    protected  $fillable = ['name', 'slug', 'description', 'price', 'special_price', 'quantity', 'status', 'featured', 'brand_id','sku'];
 
     public function setNameAttribute($value)
     {
@@ -34,11 +34,11 @@ class Product extends Model
 
     public function attributes()
     {
-        return $this->hasMany(ProductAttribute::class);
+        return $this->belongsToMany(ProductAttribute::class, 'product_attributes_pivot', 'product_id', 'product_attribute_id');
     }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'category_id');
+        return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
     }
 }

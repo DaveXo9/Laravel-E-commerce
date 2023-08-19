@@ -22,4 +22,9 @@ class ImageUploadService
         );
     }
 
+    public function deleteOne($path = null, $disk = 'public')
+    {
+        Storage::disk($disk)->delete($path);
+    }
+
 }

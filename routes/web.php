@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Admin\ProductAttributeTypeController;
+use App\Http\Controllers\Admin\ProductAttributeController;
 
 
 
@@ -37,3 +41,20 @@ Route::get('/admin/categories/{category}', [CategoryController::class, 'show'])-
 
 
 Route::resource('/admin/brands', BrandController::class, ['as' => 'admin'])->middleware('auth:admin');
+
+Route::resource('/admin/products', ProductController::class, ['as' => 'admin'])->middleware('auth:admin');
+
+Route::post('/images/upload/{product}', [ProductImageController::class, 'store'])->middleware('auth:admin')->name('admin.products.images.upload');
+Route::delete('/images/{image}', [ProductImageController::class, 'destroy'])->middleware('auth:admin')->name('admin.products.images.destroy');
+
+
+Route::resource('/admin/attributes', ProductAttributeTypeController::class, ['as' => 'admin'])->middleware('auth:admin');
+
+Route::post('/admin/product_attributes', [ProductAttributeController::class, 'store'])->middleware('auth:admin')->name('admin.attributes.values.store');
+
+Route::put('/admin/product_attributes/{product_attribute}', [ProductAttributeController::class, 'update'])->middleware('auth:admin')->name('admin.attributes.values.update');
+
+Route::delete('/admin/product_attributes/{product_attribute}', [ProductAttributeController::class, 'destroy'])->middleware('auth:admin')->name('admin.attributes.values.destroy');
+
+Route::put('/admin/product_attributes/add/{product}', [ProductAttributeController::class, 'addAttributeToProduct'])->middleware('auth:admin')->name('admin.attributes.values.add');
+Route::put('/admin/product_attributes/remove/{product}', [ProductAttributeController::class, 'removeAttributeFromProduct'])->middleware('auth:admin')->name('admin.attributes.values.remove');
