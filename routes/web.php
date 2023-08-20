@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+
+use App\Http\Controllers\Site\CategoriesController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeTypeController;
@@ -38,8 +40,9 @@ Route::post('/admin/categories', [CategoryController::class, 'store'])->middlewa
 Route::get('/admin/categories/{category}/edit', [CategoryController::class, 'edit'])->middleware('auth:admin')->name('admin.categories.edit');
 Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->middleware('auth:admin')->name('admin.categories.update');
 Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->middleware('auth:admin')->name('admin.categories.destroy');
-Route::get('/admin/categories/{category}', [CategoryController::class, 'show'])->middleware('auth:admin')->name('admin.categories.show');
+Route::get('/admin/categories/{category}', [CategoriesController::class, 'show'])->middleware('auth:admin')->name('admin.categories.show');
 
+Route::get('/admin/categories/{slug}',  [CategoryController::class,'show'])->name('category.show')->middleware('auth:admin');
 
 Route::resource('/admin/brands', BrandController::class, ['as' => 'admin'])->middleware('auth:admin');
 
@@ -60,6 +63,8 @@ Route::delete('/admin/product_attributes/{product_attribute}', [ProductAttribute
 Route::put('/admin/product_attributes/add/{product}', [ProductAttributeController::class, 'addAttributeToProduct'])->middleware('auth:admin')->name('admin.attributes.values.add');
 Route::put('/admin/product_attributes/remove/{product}', [ProductAttributeController::class, 'removeAttributeFromProduct'])->middleware('auth:admin')->name('admin.attributes.values.remove');
 
+
+
 Route::view('/', 'site.pages.homepage');
 
 Route::middleware('guest')->group(function () {
@@ -68,6 +73,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/users/authenticate', [UserController::class, 'authenticate']);
     Route::post('/users', [UserController::class, 'store']);
 });
+
+
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
 

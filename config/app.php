@@ -195,6 +195,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Third Party Service Providers...
+         */
+        App\Providers\ViewComposerServiceProvider::class,
+
+
+
     ],
 
     /*
