@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductImageController;
-use App\Http\Controllers\Admin\ProductAttributeTypeController;
 use App\Http\Controllers\Admin\ProductAttributeController;
+use App\Http\Controllers\Admin\ProductAttributeTypeController;
 
 
 
@@ -58,3 +59,17 @@ Route::delete('/admin/product_attributes/{product_attribute}', [ProductAttribute
 
 Route::put('/admin/product_attributes/add/{product}', [ProductAttributeController::class, 'addAttributeToProduct'])->middleware('auth:admin')->name('admin.attributes.values.add');
 Route::put('/admin/product_attributes/remove/{product}', [ProductAttributeController::class, 'removeAttributeFromProduct'])->middleware('auth:admin')->name('admin.attributes.values.remove');
+
+Route::view('/', 'site.pages.homepage');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [UserController::class, 'create'])->name('register');
+    Route::get('/login', [UserController::class, 'login'])->name('login');
+    Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+    Route::post('/users', [UserController::class, 'store']);
+});
+
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
+
+
+
