@@ -21,7 +21,7 @@ class Authenticate extends Middleware
             if (strpos($url, 'admin') === 0) {
                 return route('admin.login');
             } else {
-                return route('user.login');
+                return route('login');
             }
         }
     }

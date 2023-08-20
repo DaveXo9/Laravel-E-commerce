@@ -14,7 +14,7 @@
                         <h4 class="card-title mt-2">Sign In</h4>
                     </header>
                     <article class="card-body">
-                        <form action="{{ route('login') }}" method="POST" role="form">
+                        <form action="/users/authenticate" method="POST" role="form">
                             @csrf
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>

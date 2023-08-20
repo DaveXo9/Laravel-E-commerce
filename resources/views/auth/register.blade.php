@@ -14,27 +14,19 @@
                         <h4 class="card-title mt-2">Sign up</h4>
                     </header>
                     <article class="card-body">
-                        <form action="{{ route('register') }}" method="POST" role="form">
+                        <form action="/users" method="POST" role="form">
                             @csrf
                             <div class="form-row">
                                 <div class="col form-group">
-                                    <label for="first_name">First name</label>
-                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" id="first_name" value="{{ old('first_name') }}">
-                                    @error('first_name')
+                                    <label for="first_name">Full name</label>
+                                    <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}">
+                                    @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                                <div class="col form-group">
-                                    <label for="last_name">Last name</label>
-                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" value="{{ old('last_name') }}">
-                                    @error('last_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                               
                             </div>
                             <div class="form-group">
                                 <label for="email">E-Mail Address</label>
