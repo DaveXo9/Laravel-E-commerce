@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 
 use App\Http\Controllers\Site\CategoriesController;
+use App\Http\Controllers\Site\UserProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeTypeController;
@@ -40,13 +41,18 @@ Route::post('/admin/categories', [CategoryController::class, 'store'])->middlewa
 Route::get('/admin/categories/{category}/edit', [CategoryController::class, 'edit'])->middleware('auth:admin')->name('admin.categories.edit');
 Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->middleware('auth:admin')->name('admin.categories.update');
 Route::delete('/admin/categories/{category}', [CategoryController::class, 'destroy'])->middleware('auth:admin')->name('admin.categories.destroy');
-Route::get('/admin/categories/{category}', [CategoriesController::class, 'show'])->middleware('auth:admin')->name('admin.categories.show');
+// Route::get('/admin/categories/{category}', [CategoriesController::class, 'show'])->name('admin.categories.show');
 
-Route::get('/admin/categories/{slug}',  [CategoryController::class,'show'])->name('category.show')->middleware('auth:admin');
+Route::get('/categories/{slug}',  [CategoriesController::class,'show'])->name('category.show');
 
 Route::resource('/admin/brands', BrandController::class, ['as' => 'admin'])->middleware('auth:admin');
 
 Route::resource('/admin/products', ProductController::class, ['as' => 'admin'])->middleware('auth:admin');
+
+Route::get('/product/{slug}', [UserProductController::class, 'show'])->name('product.show');
+Route::post('/product/add/cart', [UserProductController::class, 'addToCart'])->name('product.add.cart');
+
+
 
 Route::post('/images/upload/{product}', [ProductImageController::class, 'store'])->middleware('auth:admin')->name('admin.products.images.upload');
 Route::delete('/images/{image}', [ProductImageController::class, 'destroy'])->middleware('auth:admin')->name('admin.products.images.destroy');

@@ -23,14 +23,14 @@
                             </figcaption>
                             <div class="bottom-wrap">
                                 <a href="{{ route('product.show', $product->slug) }}" class="btn btn-sm btn-success float-right">View Details</a>
-                                @if ($product->sale_price != 0)
+                                @if ($product->special_price != 0)
                                     <div class="price-wrap h5">
-                                        <span class="price"> {{ config('settings.currency_symbol').$product->sale_price }} </span>
-                                        <del class="price-old"> {{ config('settings.currency_symbol').$product->price }}</del>
+                                        <span class="price"> {{ $product->special_price }} </span>
+                                        <del class="price-old"> {{$product->price }}</del>
                                     </div>
                                 @else
                                     <div class="price-wrap h5">
-                                        <span class="price"> {{ config('settings.currency_symbol').$product->price }} </span>
+                                        <span class="price"> {{$product->price }} </span>
                                     </div>
                                 @endif
                             </div>
