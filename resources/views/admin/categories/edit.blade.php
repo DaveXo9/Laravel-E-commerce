@@ -30,9 +30,9 @@
                                 <option value="0">Select a parent category</option>
                                 @foreach($categories as $key => $category)
                                     @if ($targetCategory->parent_id == $key)
-                                        <option value="{{ $category->id }}" selected> {{ $category->name }} </option>
+                                        <option value="{{ $key }}" selected> {{ $category }} </option>
                                     @else
-                                        <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                                        <option value="{{ $key }}"> {{ $category }} </option>
                                     @endif
                                 @endforeach
                             </select>

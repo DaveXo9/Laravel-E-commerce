@@ -38,8 +38,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('id', '!=', 1)->get();
-        // $this->setPageTitle('Categories', 'Create Category');
+        $categories = Category::orderByRaw('-name ASC')->get()->nest()->listsFlattened('name');
 
         return view('admin.categories.create', compact('categories')); 
 
@@ -82,7 +81,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         // Retrive all categories, every single one of them
-        $categories = Category::all();
+        $categories = Category::orderByRaw('-name ASC')->get()->nest()->listsFlattened('name');
         $targetCategory = $category;
         return  view('admin.categories.edit', compact('categories', 'targetCategory'));
         //
