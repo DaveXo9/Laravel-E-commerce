@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductAttribute;
@@ -20,8 +21,16 @@ class UserProductController extends Controller
 
     public function addToCart(Request $request)
     {
+        $product = Product::find($request->productId);
+        $options = $request->except('_token', 'productId', 'price', 'qty');
+
+        Cart::add(uniqid(), $product->name, $request->input('price'), $request->input('qty'), $options);
+
+        return redirect()->back()->with('message', 'Item added to cart successfully.');
+
+
+
         
-        dd($request->all());
     
     }
 

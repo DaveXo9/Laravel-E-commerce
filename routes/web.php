@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Site\CartController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\CategoryController;
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Site\CategoriesController;
 use App\Http\Controllers\Site\UserProductController;
 use App\Http\Controllers\Admin\ProductImageController;
@@ -84,5 +85,8 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
 
+Route::get('/cart', [CartController::class, 'getCart'])->name('checkout.cart');
+Route::get('/cart/item/{id}/remove', [CartController::class, 'removeItem'])->name('checkout.cart.remove');
+Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('checkout.cart.clear');
 
 
