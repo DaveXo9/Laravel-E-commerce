@@ -63,6 +63,9 @@
                                     </div>
                                 </li>
                             </ul>
+
+                            <a class="dropdown-item" href="{{ route('account.orders') }}">Orders</a>
+
                         @endguest
                     </div>
                 </div>

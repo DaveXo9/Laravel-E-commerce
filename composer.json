@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "paypal/rest-api-sdk-php": "^1.6",
         "typicms/nestablecollection": "^2.0"
     },
     "require-dev": {

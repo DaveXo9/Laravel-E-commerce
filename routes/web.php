@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProductController;
 
+use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Site\CategoriesController;
 use App\Http\Controllers\Site\UserProductController;
@@ -88,5 +89,16 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth')->n
 Route::get('/cart', [CartController::class, 'getCart'])->name('checkout.cart');
 Route::get('/cart/item/{id}/remove', [CartController::class, 'removeItem'])->name('checkout.cart.remove');
 Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('checkout.cart.clear');
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/order', [CheckoutController::class, 'store'])->name('checkout.place.order');
+Route::get('/checkout/payment/complete', [CheckoutController::class, 'complete'])->name('checkout.payment.complete');
+
+
+Route::get('/account/orders', [AccountController::class, 'getOrders'])->name('account.orders');
+
+Route::get('/orders', 'Admin\OrderController@index')->name('admin.orders.index');
+   Route::get('/orders/{order}/show', 'Admin\OrderController@show')->name('admin.orders.show');
+
 
 
