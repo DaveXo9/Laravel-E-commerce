@@ -1,10 +1,10 @@
 @extends('admin.app')
-@section('title') {{ $pageTitle }} @endsection
+@section('title') Orders @endsection
 @section('content')
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-bar-chart"></i> {{ $pageTitle }}</h1>
-            <p>{{ $subTitle }}</p>
+            <h1><i class="fa fa-bar-chart"></i> Orders</h1>
+            <p>List of all orders</p>
         </div>
     </div>
     <div class="row">

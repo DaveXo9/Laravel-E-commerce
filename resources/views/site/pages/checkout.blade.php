@@ -26,12 +26,8 @@
                             <article class="card-body">
                                 <div class="form-row">
                                     <div class="col form-group">
-                                        <label>First name</label>
+                                        <label>Full name</label>
                                         <input type="text" class="form-control" name="first_name">
-                                    </div>
-                                    <div class="col form-group">
-                                        <label>Last name</label>
-                                        <input type="text" class="form-control" name="last_name">
                                     </div>
                                 </div>
                                 <div class="form-group">

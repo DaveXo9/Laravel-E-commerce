@@ -5,8 +5,10 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Site\CartController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
 
+use App\Http\Controllers\Site\AccountController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Site\CategoriesController;
@@ -90,15 +92,15 @@ Route::get('/cart', [CartController::class, 'getCart'])->name('checkout.cart');
 Route::get('/cart/item/{id}/remove', [CartController::class, 'removeItem'])->name('checkout.cart.remove');
 Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('checkout.cart.clear');
 
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout/order', [CheckoutController::class, 'store'])->name('checkout.place.order');
-Route::get('/checkout/payment/complete', [CheckoutController::class, 'complete'])->name('checkout.payment.complete');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth');
+Route::post('/checkout/order', [CheckoutController::class, 'store'])->name('checkout.place.order')->middleware('auth');
+Route::get('/checkout/payment/complete', [CheckoutController::class, 'complete'])->name('checkout.payment.complete')->middleware('auth');
 
 
-Route::get('/account/orders', [AccountController::class, 'getOrders'])->name('account.orders');
+Route::get('/account/orders', [AccountController::class, 'getOrders'])->name('account.orders')->middleware('auth');
 
-Route::get('/orders', 'Admin\OrderController@index')->name('admin.orders.index');
-   Route::get('/orders/{order}/show', 'Admin\OrderController@show')->name('admin.orders.show');
+Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index')->middleware('auth:admin');
+   Route::get('/orders/{order}/show', [OrderController::class, 'show'])->name('admin.orders.show')->middleware('auth:admin');
 
 
 

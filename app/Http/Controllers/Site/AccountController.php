@@ -11,6 +11,6 @@ class AccountController extends Controller
     {
         $orders = auth()->user()->orders;
 
-        return view('site.pages.account.orders', compact('orders'));
+        return view('site.pages.order', compact('orders'));
     }
 }
