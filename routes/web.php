@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\OrderController;
 
 use App\Http\Controllers\Site\AccountController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Site\CategoriesController;
@@ -101,6 +102,9 @@ Route::get('/account/orders', [AccountController::class, 'getOrders'])->name('ac
 
 Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index')->middleware('auth:admin');
    Route::get('/orders/{order}/show', [OrderController::class, 'show'])->name('admin.orders.show')->middleware('auth:admin');
+
+Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings')->middleware('auth:admin');
+Route::post('/settings', [SettingController::class, 'update'])->name('admin.settings.update')->middleware('auth:admin');
 
 
 

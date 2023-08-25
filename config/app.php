@@ -199,6 +199,7 @@ return [
          * Third Party Service Providers...
          */
         App\Providers\ViewComposerServiceProvider::class,
+        App\Providers\SettingServiceProvider::class,
 
 
 
