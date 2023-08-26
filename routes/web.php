@@ -101,7 +101,7 @@ Route::get('/checkout/payment/complete', [CheckoutController::class, 'complete']
 Route::get('/account/orders', [AccountController::class, 'getOrders'])->name('account.orders')->middleware('auth');
 
 Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index')->middleware('auth:admin');
-   Route::get('/orders/{order}/show', [OrderController::class, 'show'])->name('admin.orders.show')->middleware('auth:admin');
+Route::get('/orders/{order}/show', [OrderController::class, 'show'])->name('admin.orders.show')->middleware('auth:admin');
 
 Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings')->middleware('auth:admin');
 Route::post('/settings', [SettingController::class, 'update'])->name('admin.settings.update')->middleware('auth:admin');
